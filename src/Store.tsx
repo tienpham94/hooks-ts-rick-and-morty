@@ -17,7 +17,7 @@ const initialState: IState = {
 
 export const Store = React.createContext<IState>(initialState);
 
-function reducer(state: IState, action): IState {
+function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
     case "FETCH_DATE":
       return { ...state, episodes: action.payload };
