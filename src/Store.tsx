@@ -15,11 +15,11 @@ const initialState: IState = {
   favourites: []
 };
 
-export const Store = React.createContext<IState>(initialState);
+export const Store = React.createContext<IState | any>(initialState);
 
 function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
-    case "FETCH_DATE":
+    case "FETCH_DATA":
       return { ...state, episodes: action.payload };
     default:
       return state;
@@ -31,5 +31,8 @@ interface Props {
 }
 
 export function StoreProvider({ children }: Props): JSX.Element {
-  return <Store.Provider value={initialState}>{children}</Store.Provider>;
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+  return (
+    <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>
+  );
 }
