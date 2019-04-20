@@ -19,12 +19,21 @@ export default function App() {
     });
   };
 
-  console.log({state})
-
   return (
     <>
       <h1>Rick and Morty</h1>
-      <p>Pick fav episode</p>
+      <p>Pick your favourite episode!!!</p>
+      <section>
+        {state.episodes.map((episode: any) => (
+          <section key={episode.id}>
+            <img src={episode.image.medium} />
+            <div>{episode.name}</div>
+            <section>
+              Season: {episode.season} Number: {episode.number}
+            </section>
+          </section>
+        ))}
+      </section>
     </>
   );
 }
