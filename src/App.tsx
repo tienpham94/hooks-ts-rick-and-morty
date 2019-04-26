@@ -4,6 +4,20 @@ import { Store } from "./Store";
 const URL =
   "https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes";
 
+export interface IEpisode {
+  airdate: string;
+  airtime: string;
+  airstamp: string;
+  id: number;
+  image: {medium: string; original: string};
+  name: string;
+  number: number;
+  runtime: number;
+  season: number;
+  summary: string;
+  url: string;
+}
+
 export default function App() {
   const { state, dispatch } = React.useContext(Store);
 
@@ -19,6 +33,11 @@ export default function App() {
     });
   };
 
+  const toggleFavAction = episode: IEpe => dispatch({
+    type: "ADD_FAV",
+    payload: episode
+  })
+
   return (
     <>
       <h1>Rick and Morty</h1>
@@ -29,7 +48,12 @@ export default function App() {
             <img src={episode.image.medium} />
             <div>{episode.name}</div>
             <section>
-              Season: {episode.season} Number: {episode.number}
+              <div>
+                Season: {episode.season} Number: {episode.number}
+              </div>
+              <button type="button" onClick={() => toggleFavAction(episode)}>
+                Fav
+              </button>
             </section>
           </section>
         ))}
