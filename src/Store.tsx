@@ -1,14 +1,6 @@
 import React from "react";
 
-interface IState {
-  episodes: [];
-  favourites: [];
-}
-
-interface IAction {
-  type: string;
-  payload: any;
-}
+import {IState, IAction} from './interfaces'
 
 const initialState: IState = {
   episodes: [],
@@ -21,6 +13,8 @@ function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
     case "FETCH_DATA":
       return { ...state, episodes: action.payload };
+    case "ADD_FAV":
+      return { ...state, favourites: [...state.favourites, action.payload] };
     default:
       return state;
   }
@@ -32,6 +26,9 @@ interface Props {
 
 export function StoreProvider({ children }: Props): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+
+  console.log(state)
+
   return (
     <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>
   );
